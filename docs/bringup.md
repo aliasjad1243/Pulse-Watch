@@ -26,18 +26,6 @@ BAT ── 330 k ── BAT_LVL (ADC) ── 100 k ── GND
 The divider always draws 4.2 V / 430 kΩ ≈ 9.8 µA, and its 76.7 kΩ source
 resistance needs the slowest ADC sample time (239.5 cycles) to settle.
 
-## Current measurements
-
-Meter in series with the battery, after the protection board. Readings feed
-`analysis/battery.py life <sleep_mA> <screen_mA> <stream_mA>`:
-
-- screen off, sensors off (sleep)
-- screen on, idle watch face
-- PPG streaming over Bluetooth (the HC-05 is the biggest load)
-
-Battery life = 400 mAh × 0.85 usable ÷ time-weighted average current
-(90 % sleep, 7 % screen, 3 % streaming by default).
-
 ## HC-05 setup (once)
 
 The module defaults to 9600 baud (~960 B/s), but 100 frames/s × 10 bytes needs
