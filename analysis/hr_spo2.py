@@ -55,9 +55,15 @@ def fit_cal(R, ref_spo2):
     return intercept, -slope
 
 
+def read_rows(path):
+    """CSV rows as dicts; lines starting with '#' are comments and skipped."""
+    with open(path) as fh:
+        return list(csv.DictReader(l for l in fh if not l.startswith("#")))
+
+
 def compare(path, band_hr=2.0, band_spo2=2.0):
     """trials.csv: trial,watch_hr,ref_hr,watch_spo2,ref_spo2"""
-    rows = [r for r in csv.DictReader(open(path)) if r["watch_hr"]]
+    rows = [r for r in read_rows(path) if r["watch_hr"]]
     for name, w, r, band in (("HR", "watch_hr", "ref_hr", band_hr), ("SpO2", "watch_spo2", "ref_spo2", band_spo2)):
         d = np.array([float(x[w]) - float(x[r]) for x in rows])
         sd = d.std(ddof=1)
@@ -75,7 +81,7 @@ def main():
     if args.compare:
         compare(args.path)
         return
-    rows = list(csv.DictReader(open(args.path)))
+    rows = read_rows(args.path)
     hr, spo2, R = analyse([int(r["red"]) for r in rows], [int(r["ir"]) for r in rows], *args.cal)
     print(f"HR {hr:.1f} bpm   SpO2 {spo2:.1f} %   R {R:.3f}")
 
