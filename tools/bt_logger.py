@@ -19,6 +19,11 @@ def crc8(data):
     return crc
 
 
+def frames_missed(last_seq, seq):
+    """Frames lost between two received sequence numbers (seq wraps 255 -> 0)."""
+    return (seq - last_seq - 1) % 256
+
+
 def decode(buf):
     """Pull complete frames out of buf (a bytearray). Returns (samples, bad_crc)."""
     samples, bad = [], 0
@@ -60,7 +65,7 @@ def main():
             bad += b
             for seq, red, ir in samples:
                 if last is not None:
-                    dropped += (seq - last - 1) % 256
+                    dropped += frames_missed(last, seq)
                 last = seq
                 w.writerow([seq, red, ir])
                 rows += 1

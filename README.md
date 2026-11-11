@@ -29,7 +29,8 @@ schematics, PCB, enclosure and the rest of the firmware live in the original pro
      frames with a sequence number (to spot drops) and a CRC (to spot corruption)
      → [`firmware/ppg_stream.c`](firmware/ppg_stream.c)
 3. **Heart rate and SpO₂ in Python:** logger for the Bluetooth stream
-   → [`tools/bt_logger.py`](tools/bt_logger.py); peak detection for heart rate, ratio of
+   → [`tools/bt_logger.py`](tools/bt_logger.py), with pytest tests for good, corrupted, partial
+   and dropped frames → [`tests/test_bt_logger.py`](tests/test_bt_logger.py); peak detection for heart rate, ratio of
    ratios for SpO₂, and a script that compares the watch to a store-bought monitor
    → [`analysis/hr_spo2.py`](analysis/hr_spo2.py), trial sheet [`data/trials.csv`](data/trials.csv)
 
@@ -40,6 +41,7 @@ firmware/
   ppg_stream.c / .h           100 Hz sampling + framed Bluetooth streaming
   max30102-fifo-fix.patch     fix to the upstream MAX30102 driver
 tools/bt_logger.py            laptop-side logger (pyserial)
+tests/test_bt_logger.py       pytest tests for the frame decoder
 analysis/hr_spo2.py           HR + SpO2 from a capture; watch vs. reference comparison
 docs/bringup.md               power path, bring-up checks, HC-05 setup
 data/trials.csv               trial sheet (watch vs. reference)
@@ -68,7 +70,7 @@ data/trials.csv               trial sheet (watch vs. reference)
    python analysis/hr_spo2.py --compare data/trials.csv
    ```
 
-Python needs `numpy` and `pyserial`.
+Python needs `numpy` and `pyserial`. Tests (no hardware needed): `pip install pytest`, then `pytest tests/`.
 
 
 ## License
