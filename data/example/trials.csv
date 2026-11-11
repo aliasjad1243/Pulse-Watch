@@ -1,5 +1,5 @@
 trial,watch_hr,ref_hr,watch_spo2,ref_spo2,notes
-1,85.3,85,98.2,98,simulated
+1,85.3,85,98.2,98
 2,83.9,86,99.0,99,simulated
 3,70.2,71,97.5,98,simulated
 4,89.0,90,97.1,97,simulated
