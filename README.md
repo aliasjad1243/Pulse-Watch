@@ -70,9 +70,6 @@ data/trials.csv               trial sheet (watch vs. reference)
 
 Python needs `numpy` and `pyserial`.
 
-## Try it with example data
-
-`data/example/` has **simulated** files (generated, not measured) so the scripts can be run without the hardware; see [`data/example/README.md`](data/example/README.md).
 
 ## License
 
