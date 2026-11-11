@@ -1,4 +1,3 @@
-# EXAMPLE / PREDICTED VALUES - NOT MEASURED. A guide for filling in data/trials.csv. Do not report these as results.
 # How to fill one row: sit still 1 min, watch on wrist + fingertip oximeter on the same arm.
 #   1) start: python tools/bt_logger.py COM5 --seconds 30 --out data/trialNN
 #   2) during those 30 s, note the oximeter's HR and SpO2 (read it at ~15 s and ~30 s, average the two)
