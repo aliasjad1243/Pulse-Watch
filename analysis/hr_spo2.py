@@ -28,7 +28,7 @@ def find_peaks(x, min_gap):
     thresh = lo + 0.3 * (hi - lo)
     cand = np.where((x[1:-1] > x[:-2]) & (x[1:-1] >= x[2:]) & (x[1:-1] > thresh))[0] + 1
     peaks = []
-    for i in cand[np.argsort(x[cand])[::-1]]:          # tallest first, skip anything too close
+    for i in cand[np.argsort(x[cand])[::-1]]:          
         if all(abs(i - p) > min_gap for p in peaks):
             peaks.append(i)
     return np.array(sorted(peaks))
