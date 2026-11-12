@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 
-from bt_logger import crc8, decode, frames_missed  # noqa: E402
+from bt_logger import crc8, decode, frames_missed  
 
 GOOD = bytes.fromhex("A55A07012345023456F3")
 
@@ -25,7 +25,7 @@ def test_good_frame_decodes():
     samples, bad = decode(buf)
     assert samples == [(7, 74565, 144470)]
     assert bad == 0
-    assert buf == bytearray()          # frame consumed
+    assert buf == bytearray()          
 
 
 def test_two_frames_back_to_back():
