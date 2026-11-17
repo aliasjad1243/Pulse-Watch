@@ -1,0 +1,15 @@
+--- a/open-watch-firmware/my_watch_software/MyDrivers/MAX30102/max30102_for_stm32_hal.c
++++ b/open-watch-firmware/my_watch_software/MyDrivers/MAX30102/max30102_for_stm32_hal.c
+@@ -382,8 +382,10 @@
+     {
+         uint8_t sample[6];
+         max30102_read(obj, MAX30102_FIFO_DATA, sample, 6);
+-        uint32_t ir_sample = ((uint32_t)(sample[0] << 16) | (uint32_t)(sample[1] << 8) | (uint32_t)(sample[3])) & 0x3ffff;
+-        uint32_t red_sample = ((uint32_t)(sample[3] << 16) | (uint32_t)(sample[4] << 8) | (uint32_t)(sample[5])) & 0x3ffff;
++        // SpO2 mode: LED1 (red) comes first in the FIFO, then LED2 (IR).
++        // The old code also took the first channel's low byte from sample[3].
++        uint32_t red_sample = ((uint32_t)(sample[0] << 16) | (uint32_t)(sample[1] << 8) | (uint32_t)(sample[2])) & 0x3ffff;
++        uint32_t ir_sample = ((uint32_t)(sample[3] << 16) | (uint32_t)(sample[4] << 8) | (uint32_t)(sample[5])) & 0x3ffff;
+         obj->_ir_samples[i] = ir_sample;
+         obj->_red_samples[i] = red_sample;
+         max30102_plot(ir_sample, red_sample);
